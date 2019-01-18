@@ -1,0 +1,443 @@
+<html>
+<head>
+
+    <style>
+        #chess {
+            width:640px;
+            height:640px;
+        }
+        .field {
+            width:80px;
+            height:80px;
+            float:left;
+            border-style: solid;
+            border-width: 5px;
+            cursor:pointer;
+            font-family:Arial;
+            padding:10px;
+            padding-top:0px;
+            font-size:50px;
+            box-sizing:border-box;
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+        }
+        .light {
+            background-color:#D6D2C7
+        }
+        .dark {
+            background-color:#807150;
+        }
+        .highlight {
+            background-color:white;
+        }
+        .possible {
+            background-color:grey;
+        }
+    </style>
+</head>
+<body>
+    <div id="chess">
+        <div id="00" class="field light" onclick="bkeClick(this)"></div>
+        <div id="01" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="02" class="field light" onclick="bkeClick(this)"></div>
+        <div id="03" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="04" class="field light" onclick="bkeClick(this)"></div>
+        <div id="05" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="06" class="field light" onclick="bkeClick(this)"></div>
+        <div id="07" class="field dark" onclick="bkeClick(this)"></div>
+
+        <div id="10" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="11" class="field light" onclick="bkeClick(this)"></div>
+        <div id="12" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="13" class="field light" onclick="bkeClick(this)"></div>
+        <div id="14" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="15" class="field light" onclick="bkeClick(this)"></div>
+        <div id="16" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="17" class="field light" onclick="bkeClick(this)"></div>
+
+        <div id="20" class="field light" onclick="bkeClick(this)"></div>
+        <div id="21" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="22" class="field light" onclick="bkeClick(this)"></div>
+        <div id="23" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="24" class="field light" onclick="bkeClick(this)"></div>
+        <div id="25" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="26" class="field light" onclick="bkeClick(this)"></div>
+        <div id="27" class="field dark" onclick="bkeClick(this)"></div>
+
+        <div id="30" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="31" class="field light" onclick="bkeClick(this)"></div>
+        <div id="32" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="33" class="field light" onclick="bkeClick(this)"></div>
+        <div id="34" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="35" class="field light" onclick="bkeClick(this)"></div>
+        <div id="36" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="37" class="field light" onclick="bkeClick(this)"></div>
+
+        <div id="40" class="field light" onclick="bkeClick(this)"></div>
+        <div id="41" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="42" class="field light" onclick="bkeClick(this)"></div>
+        <div id="43" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="44" class="field light" onclick="bkeClick(this)"></div>
+        <div id="45" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="46" class="field light" onclick="bkeClick(this)"></div>
+        <div id="47" class="field dark" onclick="bkeClick(this)"></div>
+
+        <div id="50" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="51" class="field light" onclick="bkeClick(this)"></div>
+        <div id="52" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="53" class="field light" onclick="bkeClick(this)"></div>
+        <div id="54" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="55" class="field light" onclick="bkeClick(this)"></div>
+        <div id="56" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="57" class="field light" onclick="bkeClick(this)"></div>
+
+        <div id="60" class="field light" onclick="bkeClick(this)"></div>
+        <div id="61" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="62" class="field light" onclick="bkeClick(this)"></div>
+        <div id="63" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="64" class="field light" onclick="bkeClick(this)"></div>
+        <div id="65" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="66" class="field light" onclick="bkeClick(this)"></div>
+        <div id="67" class="field dark" onclick="bkeClick(this)"></div>
+
+        <div id="70" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="71" class="field light" onclick="bkeClick(this)"></div>
+        <div id="72" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="73" class="field light" onclick="bkeClick(this)"></div>
+        <div id="74" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="75" class="field light" onclick="bkeClick(this)"></div>
+        <div id="76" class="field dark" onclick="bkeClick(this)"></div>
+        <div id="77" class="field light" onclick="bkeClick(this)"></div>
+    </div>
+<script src="ruleset_chess.js"></script>
+<script>
+    
+    function endGame(c) {
+        if(c == "win") {
+            var results = winCon()
+            document.getElementById("bke").innerHTML += results[1];
+            document.getElementById(results[2]).style.backgroundColor = "green";
+            document.getElementById(results[3]).style.backgroundColor = "green";
+            document.getElementById(results[4]).style.backgroundColor = "green";
+        } else if(c == "full") {
+            document.getElementById("bke").innerHTML += "Game full, reload page";
+        }
+    }
+    var active = false;
+    function renderGame(){
+        var nodes = document.getElementById("chess").childNodes;
+        console.log(nodes);
+        for(i=1;i<(nodes.length);i=i+2) {
+            var y = nodes[i].id;
+            if(gamestate[y[0]][y[1]]){
+                document.getElementById(y).innerHTML = gamestate[y[0]][y[1]]
+            } else {
+            document.getElementById(y).innerHTML = "";
+            }
+        }
+    }
+
+    renderGame();
+    function movePiece(y, x){
+        y = parseInt(y);
+        var moves = []
+        var yPos = Math.floor(y/10)*10;
+        var xPos = y - yPos
+        console.log(xPos);
+        console.log(yPos);
+        switch(x){
+            // WHITE PAWN
+            case "&#9817;":
+                console.log("white pawn move")
+                moves.push(y - 10);
+                if (y >= 60 && y < 70) {
+                    moves.push(y - 20);
+                }
+                return moves;
+            break;
+
+            // BLACK PAWN
+            case "&#9823;":
+                console.log("black pawn move")
+                moves.push(y + 10);
+                if (y < 20 && y >= 10) {
+                    moves.push(y + 20);
+                }
+                return moves;
+            break;
+
+            // WHITE/BLACK ROOK
+            case "&#9820;":
+            case "&#9814;":
+                console.log("rook move")
+                for(i=y-10;i>=0;i=i-10) {
+                    moves.push(i);
+                }
+                for(i=y+10;i<80;i=i+10) {
+                    moves.push(i);
+                }
+                for(i=y-1;i>=yPos;i=i-1) {
+                    moves.push(i);
+                }
+                for(i=y+1;i<=(yPos+7);i=i+1) {
+                    moves.push(i);
+                }
+                console.log(moves);
+                return moves;
+            break;
+
+            // WHITE/BLACK BISHOP
+            case "&#9815;":
+            case "&#9821;":
+                console.log("bishop move")
+                var xPos1 = xPos;
+                var yPos1 = yPos;
+                for(i=y+11;xPos1<7&&yPos1<70;i=i+11){
+                    xPos1++;
+                    yPos1=yPos1+10;
+                    moves.push(i);
+                    console.log("+11: " + i)
+                }
+                var xPos2 = xPos;
+                var yPos2 = yPos;
+                for(i=y+9;xPos2>0&&yPos2<70;i=i+9){
+                    xPos2--;
+                    yPos2=yPos2+10;
+                    moves.push(i);
+                    console.log("+9: " + i)
+                }
+                var xPos3 = xPos;
+                var yPos3 = yPos;
+                for(i=y-11;xPos3>0&&yPos3>0;i=i-11){
+                    xPos3--;
+                    yPos3=yPos3-10;
+                    moves.push(i);
+                    console.log("-11: " + i)
+                }
+                var xPos4 = xPos;
+                var yPos4 = yPos;
+                for(i=y-9;xPos4<7&&yPos4>0;i=i-9){
+                    xPos4++;
+                    yPos4=yPos4-10;
+                    moves.push(i);
+                    console.log("-9: " + i)
+                }
+                return moves;
+            break;
+
+            // WHITE/BLACK QUEEN
+            case "&#9813;":
+            case "&#9819;":
+                console.log("queen move")
+                for(i=y-10;i>=0;i=i-10) {
+                    moves.push(i);
+                }
+                for(i=y+10;i<80;i=i+10) {
+                    moves.push(i);
+                }
+                for(i=y-1;i>=yPos;i=i-1) {
+                    moves.push(i);
+                }
+                for(i=y+1;i<=(yPos+7);i=i+1) {
+                    moves.push(i);
+                }
+                var xPos1 = xPos;
+                var yPos1 = yPos;
+                for(i=y+11;xPos1<7&&yPos1<70;i=i+11){
+                    xPos1++;
+                    yPos1=yPos1+10;
+                    moves.push(i);
+                    console.log("+11: " + i)
+                }
+                var xPos2 = xPos;
+                var yPos2 = yPos;
+                for(i=y+9;xPos2>0&&yPos2<70;i=i+9){
+                    xPos2--;
+                    yPos2=yPos2+10;
+                    moves.push(i);
+                    console.log("+9: " + i)
+                }
+                var xPos3 = xPos;
+                var yPos3 = yPos;
+                for(i=y-11;xPos3>0&&yPos3>0;i=i-11){
+                    xPos3--;
+                    yPos3=yPos3-10;
+                    moves.push(i);
+                    console.log("-11: " + i)
+                }
+                var xPos4 = xPos;
+                var yPos4 = yPos;
+                for(i=y-9;xPos4<7&&yPos4>0;i=i-9){
+                    xPos4++;
+                    yPos4=yPos4-10;
+                    moves.push(i);
+                    console.log("-9: " + i)
+                }
+                return moves;
+            break;
+
+             // WHITE/BLACK KING
+            case "&#9812;":
+            case "&#9818;":
+                console.log("king move")
+                if(y-10>=0){
+                    moves.push(y-10);
+                }
+                if (y+10<=77) {
+                    moves.push(y+10);
+                }
+                if (xPos+1<=7) {
+                    moves.push(y+1);
+                }
+                if (xPos-1>=0) {
+                    moves.push(y-1);
+                }
+                if (xPos+1<=7&&yPos+10<80){
+                    moves.push(y+11);
+                }
+                if (xPos-1>=0&&yPos+10<80){
+                    moves.push(y+9);
+                }
+                if (xPos+1<=7&&yPos-10>0){
+                    moves.push(y-9);
+                }
+                if (xPos-1>=0&&yPos-10>0){
+                    moves.push(y-11);
+                }
+                console.log(moves);
+                return moves;
+            break;
+
+            // WHITE/BLACK KNIGHT
+            case "&#9822;":
+            case "&#9816;":
+                console.log("knight move")
+                var temp;
+                // boven
+                if(y-10>=0){
+                    temp = y-10
+                    var yTemp = Math.floor(temp/10)*10;
+                    var xTemp = temp - yTemp
+                    //rechts boven
+                    if (xTemp+1<=7&&yTemp-10>=0){
+                        moves.push(temp-9);
+                    }
+                    //links boven
+                    if (xTemp-1>=0&&yTemp-10>=0){
+                        moves.push(temp-11);
+                    }
+                }
+                // beneden
+                if (y+10<=77) {
+                    temp = y+10;
+                    var yTemp = Math.floor(temp/10)*10;
+                    var xTemp = temp - yTemp
+                    //rechts onder
+                    if (xPos+1<=7&&yPos+10<=77){
+                        moves.push(temp+11);
+                    }
+                    // links onder
+                    if (xPos-1>=0&&yPos+10<=77){
+                        moves.push(temp+9);
+                    }
+                }
+                // rechts
+                if (xPos+1<=7) {
+                    temp = y+1;
+                    var yTemp = Math.floor(temp/10)*10;
+                    var xTemp = temp - yTemp
+                    //rechts onder
+                    if (xTemp+1<=7&&yTemp+10<=77){
+                        moves.push(temp+11);
+                    }
+                    //rechts boven
+                    if (xTemp+1<=7&&yTemp-10>=0){
+                        moves.push(temp-9);
+                    }
+                }
+                // links
+                if (xPos-1>=0) {
+                    temp = y-1;
+                    var yTemp = Math.floor(temp/10)*10;
+                    var xTemp = temp - yTemp
+                    // links onder
+                    if (xTemp-1>=0&&yTemp+10<=77){
+                        moves.push(temp+9);
+                    }
+                    //links boven
+                    if (xTemp-1>=0&&yTemp-10>=0){
+                        moves.push(temp-11);
+                    }
+                }
+
+                // //rechts onder
+                // if (xTemp+1<=7&&yTemp+10<=77){
+                //     moves.push(temp+11);
+                // }
+                // // links onder
+                // if (xTemp-1>=0&&yTemp+10<=77){
+                //     moves.push(temp+9);
+                // }
+                // //rechts boven
+                // if (xTemp+1<=7&&yTemp-10>=0){
+                //     moves.push(temp-9);
+                // }
+                // //links boven
+                // if (xTemp-1>=0&&yTemp-10>=0){
+                //     moves.push(temp-11);
+                // }
+                console.log(moves);
+                return moves;
+            break;
+
+            default:
+            console.log("default move")
+        }
+    }
+    var possibleMove = [];
+    function bkeClick(x) {
+        if (!active && gamestate[x.id[0]][x.id[1]] != 0){
+            active = x.id;
+            x.classList.toggle('highlight');
+            possibleMove = movePiece(x.id, gamestate[x.id[0]][x.id[1]]);
+            for(i=0;i<possibleMove.length;i++) {
+                var u = JSON.stringify(possibleMove[i])
+                if(u.length<2){
+                    u = "0" + u;
+                }
+                document.getElementById(u).classList.add("possible");
+            }        
+        } else if (x.id === active) {
+            active = false;
+            x.classList.toggle('highlight');
+            for(i=0;i<possibleMove.length;i++) {
+                var u = JSON.stringify(possibleMove[i])
+                if(u.length<2){
+                    u = "0" + u;
+                }
+                document.getElementById(u).classList.remove("possible");
+            }    
+        } else if (x.className.search("possible") != -1){
+            active = document.getElementById(active)
+            gamestate[x.id[0]][x.id[1]] = gamestate[active.id[0]][active.id[1]];
+            gamestate[active.id[0]][active.id[1]] = 0;
+            active.classList.toggle('highlight');
+            active = false;
+            for(i=0;i<possibleMove.length;i++) {
+                var u = JSON.stringify(possibleMove[i])
+                if(u.length<2){
+                    u = "0" + u;
+                }
+                document.getElementById(u).classList.remove("possible");
+            } 
+            renderGame();             
+        }
+    }
+</script>
+</body>
+
+</html>
